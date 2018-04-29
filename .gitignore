@@ -3,6 +3,7 @@ npm_debug.log
 *.log
 .vscode/
 env/
+log/
 .env
 .DS_Store
 .history
