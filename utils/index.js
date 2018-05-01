@@ -1,5 +1,25 @@
 const moment = require('moment');
 
+function getEvnVariables() {
+  return {
+    // Node Environment Configuration
+    NODE_ENV: process.env.NODE_ENV,
+    PORT: process.env.PORT,
+
+    // Jexia API Credentials
+    JEXIA_APP_URL: process.env.JEXIA_APP_URL,
+    JEXIA_API_KEY: process.env.JEXIA_API_KEY,
+    JEXIA_SECRET_KEY: process.env.JEXIA_SECRET_KEY,
+
+    // Redis Configuration #########
+    // Session expiry set to 1 month for development 60*60*24*30 ###
+    REDIS_CONNECTION_URL: process.env.REDIS_CONNECTION_URL,
+    REDIS_PASSWORD: process.env.REDIS_PASSWORD,
+    REDIS_UNIX_SOCKET: process.env.REDIS_UNIX_SOCKET,
+    REDIS_SESSION_EXPIRY_TIME: process.env.REDIS_SESSION_EXPIRY_TIME,
+  }
+}
+
 function getJoiErrors(error) {
   if (error && error.isJoi) {
     const errors = error.details.map((error) => {
@@ -46,6 +66,7 @@ function trimObject(obj) {
 }
 
 module.exports = {
+  getEvnVariables,
   getJoiErrors,
   getAppName,
   toUTCDate,

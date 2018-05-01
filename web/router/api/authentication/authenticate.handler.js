@@ -1,11 +1,13 @@
 const sdk = require('jexia-sdk-js/node');
 const fetch = require("node-fetch");
 const Boom = require('boom');
+const {
+  JEXIA_APP_URL: APP_URL,
+  JEXIA_API_KEY: API_KEY,
+  JEXIA_SECRET_KEY: SECRET_KEY
+} = rootRequire('utils').getEvnVariables();
 
 async function logic() {
-  const APP_URL = process.env.JEXIA_APP_URL;
-  const API_KEY = process.env.JEXIA_API_KEY;
-  const SECRET_KEY = process.env.JEXIA_SECRET_KEY;
   let dataModule = sdk.dataOperations();
 
   console.log(dataModule);
