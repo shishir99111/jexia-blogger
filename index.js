@@ -14,15 +14,4 @@ require('./globals');
 // Start server
 const { appServer } = require('./web/server');
 
-if (process.env.INITIALIZE_WORKER === 'true') {
-  initializeWorker().then((emitEvent) => {
-    global.emitEvent = emitEvent;
-  }).catch(e => {
-    logger.error(`Error Starting workers ${e.message}`);
-    logger.error('Shutting Down Process');
-    process.exit(0);
-  });
-} else {
-  logger.info(`Workers not running for ${process.env.NODE_ENV}`);
-}
 require('./gracefullyShutDown')(appServer);
