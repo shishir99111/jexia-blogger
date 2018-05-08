@@ -7,4 +7,8 @@ const authenticationHandler = require('./authenticate.handler');
  */
 module.exports = (router) => {
   router.get('/authentication', authenticationHandler);
+  /** future routes
+  router.get('/records/all', getRecordsHandler);
+  router.get('/records/:id', getRecordByIdHandler);
+  router.post('/records', postRecord);  */
 };

@@ -14,6 +14,8 @@ async function logic() {
 
   let initializedClientPromise = sdk.jexiaClient(fetch).init({ appUrl: APP_URL, projectID: 'b6ba8a4f-2113-44cd-a946-1e4fa6bed0e4', key: API_KEY, secret: SECRET_KEY });
   initializedClientPromise.then((initializedClient) => {
+    // Issue with the creating instance of Dataset.
+    // have to check with the NPM Library.
     let comments = dataModule.dataset("comments");
     let selectQuery = postsDataset.select();
   }).catch((e) => {
