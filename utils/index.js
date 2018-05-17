@@ -1,6 +1,11 @@
 const moment = require('moment');
+const sdk = require('jexia-sdk-js/node');
+const fetch = require("node-fetch");
+const client = sdk.jexiaClient;
+const dataOperations = sdk.dataOperations;
+const datasets = {};
 
-function getEvnVariables() {
+function getEnvVariables() {
   return {
     // Node Environment Configuration
     NODE_ENV: process.env.NODE_ENV,
@@ -10,6 +15,7 @@ function getEvnVariables() {
     JEXIA_APP_URL: process.env.JEXIA_APP_URL,
     JEXIA_API_KEY: process.env.JEXIA_API_KEY,
     JEXIA_SECRET_KEY: process.env.JEXIA_SECRET_KEY,
+    JEXIA_PROJECT_ID: process.env.JEXIA_PROJECT_ID,
 
     // Redis Configuration #########
     // Session expiry set to 1 month for development 60*60*24*30 ###
@@ -65,11 +71,35 @@ function trimObject(obj) {
   return obj;
 }
 
+async function createDatasetInstance(datasetName) {
+  if (datasets[datasetName]) {
+    return datasets[datasetName];
+  } else {
+    const {
+      JEXIA_APP_URL: APP_URL,
+      JEXIA_API_KEY: API_KEY,
+      JEXIA_SECRET_KEY: SECRET_KEY,
+      JEXIA_PROJECT_ID: PROJECT_ID,
+    } = getEnvVariables();
+
+    let dataModule = dataOperations();
+
+    let initializedClient = await client(fetch).init({ appUrl: APP_URL, projectID: PROJECT_ID, key: API_KEY, secret: SECRET_KEY }, dataModule);
+
+    let datasetInstance = dataModule.dataset(datasetName);
+
+    datasets[datasetName] = datasetInstance;
+
+    return datasetInstance;
+  }
+}
+
 module.exports = {
-  getEvnVariables,
+  getEnvVariables,
   getJoiErrors,
   getAppName,
   toUTCDate,
   sanitizeObj,
   trimObject,
+  createDatasetInstance,
 };
