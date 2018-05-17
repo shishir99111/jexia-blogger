@@ -1,26 +1,20 @@
-const sdk = require('jexia-sdk-js/node');
-const fetch = require("node-fetch");
 const Boom = require('boom');
-const {
-  JEXIA_APP_URL: APP_URL,
-  JEXIA_API_KEY: API_KEY,
-  JEXIA_SECRET_KEY: SECRET_KEY
-} = rootRequire('utils').getEvnVariables();
+const { createDatasetInstance } = rootRequire('utils')
 
 async function logic() {
-  let dataModule = sdk.dataOperations();
 
-  console.log(dataModule);
+  // const users = [
+  //   { full_name: "John Doe", email: "john@example.com", password: 'User@123', type: 'admin' },
+  //   { full_name: "Jane Doe", email: "jane@example.com", password: 'User@123', type: 'admin' }
+  // ];
 
-  let initializedClientPromise = sdk.jexiaClient(fetch).init({ appUrl: APP_URL, projectID: 'b6ba8a4f-2113-44cd-a946-1e4fa6bed0e4', key: API_KEY, secret: SECRET_KEY });
-  initializedClientPromise.then((initializedClient) => {
-    // Issue with the creating instance of Dataset.
-    // have to check with the NPM Library.
-    let comments = dataModule.dataset("comments");
-    let selectQuery = postsDataset.select();
-  }).catch((e) => {
-    throw Boom.badRequest(e.message);
-  });
+  const commentDataset = await createDatasetInstance('comments');
+
+  // await commentDataset.insert(users).execute();
+
+  let selectQuery = await commentDataset.select().execute();
+
+  return selectQuery
 }
 
 function handler(req, res, next) {
