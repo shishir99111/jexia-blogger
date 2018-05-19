@@ -94,6 +94,19 @@ async function createDatasetInstance(datasetName) {
   }
 }
 
+function checkIfValidDataset(dataset) {
+  return DATASETS.indexOf(dataset) !== -1;
+}
+
+function getErrorMessages(error) {
+  if (error.details && error.details.length > 0) {
+    return error.details.reduce((p, v) => {
+      return `${p}${v.message} </br>`;
+    }, '');
+  }
+  return error.message;
+}
+
 module.exports = {
   getEnvVariables,
   getJoiErrors,
@@ -102,4 +115,6 @@ module.exports = {
   sanitizeObj,
   trimObject,
   createDatasetInstance,
+  checkIfValidDataset,
+  getErrorMessages,
 };
