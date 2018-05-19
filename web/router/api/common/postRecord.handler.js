@@ -1,10 +1,17 @@
 const Boom = require('boom');
-const { createDatasetInstance } = rootRequire('utils')
+const { createDatasetInstance, checkIfValidDataset } = rootRequire('utils');
+const { postCommentSchema } = rootRequire('joi');
+const { DATASETS } = rootRequire('constants');
 
 async function logic({ body, params }) {
-  const dataset = await createDatasetInstance(params.dataset);
+  if (!checkIfValidDataset(params.dataset)) Boom.badRequest('Invalid Dataset');
 
-  return (await commentDataset.insert(body).execute());
+  // const { error } = Joi.validate(body, postSchema, { abortEarly: false });
+  // if (error) throw Boom.badRequest(getErrorMessages(error));
+
+  const dataset = await createDatasetInstance(params.dataset);
+  const _body = Array.isArray(body) ? body : [body];
+  return (await dataset.insert(_body).execute());
 }
 
 function handler(req, res, next) {
