@@ -1,8 +1,9 @@
 const Boom = require('boom');
 const { createDatasetInstance } = rootRequire('utils')
+const { field } = require('jexia-sdk-js');
 
 async function logic({ params }) {
-  const dataset = await createDatasetInstance(params.dataset_name);
+  const dataset = await createDatasetInstance(params.dataset);
 
   let records = await dataset.select().where(field('id').isEqualTo(params.id)).execute();
   return records

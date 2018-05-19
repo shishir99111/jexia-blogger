@@ -1,6 +1,6 @@
 const getRecordsHandler = require('./getRecords.handler');
-const postRecord = require('./postRecord.handler');
-const getRecordById = require('./getRecordById.handler');
+const postRecordHandler = require('./postRecord.handler');
+const getRecordByIdHandler = require('./getRecordById.handler');
 
 /**
  * Mounts component specific routes,
@@ -9,6 +9,6 @@ const getRecordById = require('./getRecordById.handler');
  */
 module.exports = (router) => {
   router.get('/records/:dataset/all', getRecordsHandler);
-  router.get('/records/:dataset/:id', getRecordByIdHandler);
-  router.post('/records/:dataset', postRecord);
+  router.get('/record/:dataset/:id', getRecordByIdHandler);
+  router.post('/records/:dataset', postRecordHandler);
 };

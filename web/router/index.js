@@ -6,7 +6,7 @@ const router = require('express').Router();
 sanitizeRequestObj(router);
 
 /** Open routes */
-require('./api/authentication')(router);
+require('./api/common')(router);
 
 // authorization(router);
 
