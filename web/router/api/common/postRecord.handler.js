@@ -1,13 +1,24 @@
 const Boom = require('boom');
 const { createDatasetInstance, checkIfValidDataset } = rootRequire('utils');
-const { postCommentSchema } = rootRequire('joi');
+const { postUserSchema, postBlogSchema, postCommentSchema } = rootRequire('joi');
 const { DATASETS } = rootRequire('constants');
+
+const schemaSelection = function(dataset) {
+  switch (dataset) {
+    case 'comment':
+      return postCommentSchema;
+    case 'blog':
+      return postBlogSchema;
+    case 'user':
+      return postUserSchema;
+  }
+}
 
 async function logic({ body, params }) {
   if (!checkIfValidDataset(params.dataset)) Boom.badRequest('Invalid Dataset');
 
-  // const { error } = Joi.validate(body, postSchema, { abortEarly: false });
-  // if (error) throw Boom.badRequest(getErrorMessages(error));
+  const { error } = Joi.validate(body, schemaSelection(params.dataset), { abortEarly: false });
+  if (error) throw Boom.badRequest(getErrorMessages(error));
 
   const dataset = await createDatasetInstance(params.dataset);
   const _body = Array.isArray(body) ? body : [body];
