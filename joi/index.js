@@ -1,3 +1,5 @@
+const Joi = require('joi');
+
 const postUserSchema = Joi.object().keys({
   full_name: Joi.string().min(2).max(100).required(),
   email: Joi.string().email().required(),
