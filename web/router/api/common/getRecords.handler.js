@@ -1,11 +1,16 @@
 const Boom = require('boom');
-const { createDatasetInstance } = rootRequire('utils')
+
+const { createDatasetInstance } = rootRequire('utils');
 
 async function logic({ params }) {
-  const dataset = await createDatasetInstance(params.dataset);
+  try {
+    const dataset = await createDatasetInstance(params.dataset);
 
-  let records = await dataset.select().execute();
-  return records
+    const records = await dataset.select().execute();
+    return records;
+  } catch (e) {
+    throw e;
+  }
 }
 
 function handler(req, res, next) {

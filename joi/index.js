@@ -4,7 +4,7 @@ const postUserSchema = Joi.object().keys({
   full_name: Joi.string().min(2).max(100).required(),
   email: Joi.string().email().required(),
   password: Joi.string().min(7).max(20).required(),
-  type: Joi.string().min(1).max(8000).required()
+  type: Joi.string().min(1).max(8000).required(),
 });
 
 const postBlogSchema = Joi.object().keys({
@@ -12,7 +12,7 @@ const postBlogSchema = Joi.object().keys({
   subtitle: Joi.string().min(2).max(8000).required(),
   content: Joi.string().min(2).max(8000).required(),
   user_id: Joi.number().required(),
-  annotations: Joi.array().items(Joi.string()).optional()
+  annotations: Joi.array().items(Joi.string()).optional(),
 });
 
 const postCommentSchema = Joi.object().keys({
@@ -25,5 +25,5 @@ const postCommentSchema = Joi.object().keys({
 module.exports = {
   postUserSchema,
   postBlogSchema,
-  postCommentSchema
+  postCommentSchema,
 };

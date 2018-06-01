@@ -1,5 +1,5 @@
 const constants = {
-  DATASETS: ['comments', 'users', 'blogs']
-}
+  DATASETS: ['comments', 'users', 'blogs'],
+};
 
 module.exports = constants;
